@@ -1,0 +1,24 @@
+{
+  "name": "isocks",
+  "version": "1.0.0",
+  "description": "NodeJS Interface for Socks5 Proxy Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isofew/isocks.git"
+  },
+  "keywords": [
+    "proxy",
+    "socks",
+    "socks5"
+  ],
+  "author": "isofew <isofew@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/isofew/isocks/issues"
+  },
+  "homepage": "https://github.com/isofew/isocks#readme"
+}
