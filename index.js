@@ -1,4 +1,3 @@
-
 var net = require('net');
 
 var init = () => {
@@ -45,19 +44,15 @@ var request = (server, socket, buffer) => {
     host: buffer.toString('utf8', 5, length - 2),
     port: buffer.readUInt16BE(length - 2),
     family: buffer[3] === 4 ? 6 : 4 // code 4 is for ipv6
-  }, (code) => reply(socket, code));
+  }, (err) => reply(socket, err ? 1 : 0));
 };
 
 var reply = (socket, code) => {
   try {
     socket.write(Buffer([5, code, 0, 1, 0, 0, 0, 0, 0, 80]));
-  } catch (e) {
-    // do nothing
-  }
+  } catch (e) {}
 };
 
 module.exports = {
-  createServer: init,
-  success: 0,
-  failure: 1,
+  createServer: init
 };

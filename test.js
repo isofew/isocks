@@ -1,4 +1,3 @@
-
 var net = require('net');
 var isocks = require('.');
 var socks = isocks.createServer();
@@ -6,11 +5,16 @@ var socks = isocks.createServer();
 socks.on('connect', (socket, request, reply) => {
   var sockeT = net.createConnection(request, () => {
     console.log('connected', request);
-    reply(isocks.success);
     socket.pipe(sockeT);
     sockeT.pipe(socket);
+    reply();
   })
-  .on('error', () => reply(isocks.failure));
+  .on('error', reply);
+  setTimeout(() => {
+    console.log('timeout', request);
+    reply('timeout');
+    socket.destroy();
+  }, 3000);
 });
 
 socks.listen(61080);
