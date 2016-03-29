@@ -5,12 +5,13 @@ var socks = isocks.createServer();
 socks.on('connect', (socket, request, reply) => {
   var sockeT = net.createConnection(request, () => {
     console.log('connected', request);
+    clearTimeout(timer);
     socket.pipe(sockeT);
     sockeT.pipe(socket);
     reply();
   })
   .on('error', reply);
-  setTimeout(() => {
+  var timer = setTimeout(() => {
     console.log('timeout', request);
     reply('timeout');
     socket.destroy();
