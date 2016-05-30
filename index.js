@@ -1,4 +1,5 @@
 var net = require('net');
+var parser = require('./parser');
 
 var init = () => {
   var server = net.createServer();
@@ -40,11 +41,7 @@ var request = (server, socket, buffer) => {
     return ;
   }
   var length = buffer.length;
-  server.emit('connect', socket, {
-    host: buffer.toString('utf8', 5, length - 2),
-    port: buffer.readUInt16BE(length - 2),
-    family: buffer[3] === 4 ? 6 : 4 // code 4 is for ipv6
-  }, (err) => reply(socket, err ? 1 : 0));
+  server.emit('connect', socket, parser.addr.parse(buffer, 3), (err) => reply(socket, err ? 1 : 0));
 };
 
 var reply = (socket, code) => {
